@@ -1,25 +1,27 @@
 function Character(name,speechColour,scaleX,scaleY){
-    console.log('thing!');
     this.name = name;
     // RenJS.characters[this.name] = this;
     this.looks = {};
     this.currentLook = null;
     this.speechColour = speechColour;
-    this.scaleX = scaleX;
-    this.scaleY = scaleY;
-    console.log('Scale is ' + scaleX + ', ' + scaleY);
+    if (scaleX !== undefined && scaleY !== undefined) {
+      this.scaleX = scaleX;
+      this.scaleY = scaleY;
+    } else {
+      this.scaleX = 1;
+      this.scaleY = 1;
+    }
     this.addLook = function(lookName,image){
         var look = RenJS.storyManager.characterSprites.create(config.positions.CENTER.x,config.positions.CENTER.y,(image ? image : lookName));
         look.anchor.set(0.5, 1);
         look.alpha = 0;
         look.name = lookName;
-        look.scale.setTo(scaleX, scaleY);
+        look.scale.setTo(this.scaleX, this.scaleY);
         this.looks[lookName] = look;
         if (!this.currentLook){
             this.currentLook = this.looks[lookName];
         }
     }
-    console.log(RenJS.story.setup.characters);
 }
 
 function CharactersManager(){
